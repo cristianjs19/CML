@@ -1,0 +1,65 @@
+.floating-label-form-group .help-block {
+  display: none;
+}
+
+.help-block {
+  display: none;
+}
+
+.panel.panel-default.rating {
+  clear: both;
+  padding-top: 40px;
+}
+
+ul.radio.radio-inline li {
+  display: inline-block;
+  padding-right: 5px;
+}
+
+ul.radio.radio-inline li input {
+  margin-right: 5px;
+}
+
+form.mezzanine-form input, form.mezzanine-form textarea {
+  width: 100%;
+}
+
+.site-heading .meta a {
+  color: white;
+}
+
+#comment .floating-label-form-group label {
+  opacity: 1;
+  font-size: 21px;
+  top: 0;
+}
+
+#comment .floating-label-form-group input, #comment .floating-label-form-group textarea {
+  width: 100%;
+}
+
+#mainNav.is-visible {
+  border-bottom: 3px solid black;
+}
+
+.blog-filters {
+  margin-bottom: 40px;
+}
+
+.blog-filters .dropdown a {
+  display: block;
+}
+
+/* Product Forms */
+form#add-cart.shop-form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+form#add-cart.shop-form .form-group {
+  margin-right: 30px;
+}
+
+form#add-cart.shop-form .form-actions {
+  flex-basis: 100%;
+}
