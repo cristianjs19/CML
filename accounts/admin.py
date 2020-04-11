@@ -4,7 +4,7 @@ from accounts.models import Account
 
 
 class AccountAdmin(UserAdmin):
-	list_display = ('username','fname', 'sname','is_staff')
+	list_display = ('username','name', 'surname','is_staff')
 	search_fields = ('username',)
 
 	filter_horizontal = ()

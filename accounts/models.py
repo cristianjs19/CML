@@ -30,13 +30,26 @@ class MyAccountManager(BaseUserManager):
 		user.save(using=self._db)
 		return user
 
+# class Image(models.Model):
+# 	image_id = models.AutoField(primary_key=True)
+# 	blog = models.BooleanField(blank=True)
+# 	image = models.ImageField(upload_to='images', null=True, blank=True)
+# 	slug = models.SlugField(max_length=30, blank=False)
+# 	image_alt = models.CharField(max_length=30, blank=True)
+# 	image_credit = models.CharField(max_length=30, blank=True)
+
+# 	def __str__(self):		
+# 		return self.slug
+
 
 class Account(AbstractBaseUser):
-	user_id = models.AutoField(primary_key=True)
-	username = models.CharField(max_length=30, unique=True)
-	fname = models.CharField(verbose_name="First Name", max_length=30, blank=False)
-	sname = models.CharField(verbose_name="Second Name", max_length=30, blank=False)
-	# email = models.EmailField(verbose_name="email", max_length=60, unique=True)
+	id = models.AutoField(primary_key=True)
+	username = models.CharField(max_length=30, unique=True, blank=False)
+	name = models.CharField(verbose_name="Name", max_length=30, blank=False)
+	surname = models.CharField(verbose_name="Surname", max_length=30, blank=False)
+	email = models.EmailField(verbose_name="email", max_length=60, unique=True, blank=False)
+	provence = models.CharField(verbose_name="Provence", max_length=30, blank=False)
+	image = models.ImageField(upload_to='images', null=True, blank=True)
 	is_admin = models.BooleanField(default=False)
 	is_active = models.BooleanField(default=True)
 	is_staff = models.BooleanField(default=False)
