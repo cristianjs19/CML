@@ -42,7 +42,7 @@ class MyAccountManager(BaseUserManager):
 # 		return self.slug
 
 
-class Account(AbstractBaseUser):
+class User(AbstractBaseUser):
 	id = models.AutoField(primary_key=True)
 	username = models.CharField(max_length=30, unique=True, blank=False)
 	name = models.CharField(verbose_name="Name", max_length=30, blank=False)
