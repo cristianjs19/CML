@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 
 from .views import HomePageView
-from accounts.views import AccountCreateView
+from accounts.views import UserCreateView
 from django.contrib.auth.views import LoginView, LogoutView
 
 # from usuarios.urls import pages_patterns
@@ -26,9 +26,12 @@ from django.contrib.auth.views import LoginView, LogoutView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomePageView.as_view(), name='home'),
-    path('register/', AccountCreateView.as_view(), name='register'),
+    path('register/', UserCreateView.as_view(), name='register'),
     path('login/', LoginView.as_view(template_name='form.html', extra_context={'title':'Login'}), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    
+    path('accounts/', include('accounts.urls')),
+    path('books/', include('books.urls')),
     # path('accounts/', include('allauth.urls')),
 
 

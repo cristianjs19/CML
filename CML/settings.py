@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # 'allauth.account',
     # 'allauth.socialaccount',
     'crispy_forms',
+    'rest_framework',
 
     #Local:
     'accounts',
@@ -138,7 +139,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 SITE_ID = 1
 
-AUTH_USER_MODEL = 'accounts.Account'
+AUTH_USER_MODEL = 'accounts.User'
 
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"

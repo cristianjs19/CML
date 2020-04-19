@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from accounts.models import Account
+from accounts.models import User
 
 
-class AccountAdmin(UserAdmin):
+class UserAdmin(UserAdmin):
 	list_display = ('username','name', 'surname','is_staff')
 	search_fields = ('username',)
 
@@ -12,7 +12,7 @@ class AccountAdmin(UserAdmin):
 	fieldsets = ()
 
 
-admin.site.register(Account, AccountAdmin)
+admin.site.register(User, UserAdmin)
 
 
 
