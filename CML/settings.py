@@ -49,9 +49,10 @@ INSTALLED_APPS = [
     'rest_framework',
 
     #Local:
+    'bookingApp',
+
     'accounts',
-    'books',
-    'bookingApp'
+    'books'
 ]
 
 MIDDLEWARE = [
