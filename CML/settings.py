@@ -50,7 +50,8 @@ INSTALLED_APPS = [
 
     #Local:
     'accounts',
-    'books'
+    'books',
+    'bookingApp'
 ]
 
 MIDDLEWARE = [
