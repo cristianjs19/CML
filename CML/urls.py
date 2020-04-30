@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
+from rest_framework.documentation import include_docs_urls
 
 from .views import HomePageView
 from accounts.views import UserCreateView
@@ -32,6 +33,7 @@ urlpatterns = [
     
     path('accounts/', include('accounts.urls')),
     path('books/', include('books.urls')),
+    path('docs/', include_docs_urls(title='My API'))
     # path('acuerdo/', include('books.urls')),
     # path('solicitud/', include('books.urls')),
     # path('accounts/', include('allauth.urls')),
