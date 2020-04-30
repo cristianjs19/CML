@@ -32,6 +32,8 @@ urlpatterns = [
     
     path('accounts/', include('accounts.urls')),
     path('books/', include('books.urls')),
+    # path('acuerdo/', include('books.urls')),
+    # path('solicitud/', include('books.urls')),
     # path('accounts/', include('allauth.urls')),
 
 

@@ -29,20 +29,24 @@ class Book(models.Model):
 	description = models.CharField(max_length=200,null=True, blank=True)
 	genre = models.CharField(max_length=30 , null=True, blank=True, choices=GENRES)
 	status = models.CharField(max_length=30 , null=True, blank=False, choices=STATUS)
-	cover = models.ImageField(upload_to='images/book_images', null=True, blank=True)	
+	cover = models.ImageField(upload_to='images/book_images', null=True, blank=True)
+
+	def __str__(self):
+		return self.title	
 
 
 class BookImage(models.Model):
-	product = models.ForeignKey(Book, null=False, blank=False, related_name='images', on_delete=CASCADE)
+	book = models.ForeignKey(Book, null=False, blank=False, related_name='images', on_delete=CASCADE)
 	image = models.ImageField(upload_to='images/book_images', null=True, blank=True)
 
 	def __str__(self):
-		return self.product
+		return self.book
 
 	class Meta:
 		verbose_name_plural = "BookImages"
 
 class LendingAgreement(models.Model):
+	title = models.CharField(max_length=100)
 	user = models.ForeignKey(User, on_delete=CASCADE, related_name='user')
 	owner = models.ForeignKey(User, on_delete=CASCADE, related_name='owner')
 	book = models.ForeignKey(Book, on_delete=CASCADE)
@@ -56,9 +60,15 @@ class LendingAgreement(models.Model):
 	extendable = models.CharField(max_length=30 , null=True, blank=True, choices=EXTENDABLE)
 
 	def __str__(self):
-		return self.product
+		return self.title
 
 class LendingRequest(models.Model):
 	title = models.CharField(max_length=100)
 	message = models.TextField(max_length=300)
-	agreement = models.ForeignKey(LendingAgreement, on_delete=CASCADE)
+	sender = models.ForeignKey(User, on_delete=CASCADE, related_name='sender')
+	reciever = models.ForeignKey(User, on_delete=CASCADE, related_name='reciever', null=True, blank=True)
+	public = models.BooleanField(default=False)
+	agreement = models.ForeignKey(LendingAgreement, on_delete=CASCADE, null=True, blank=True)
+
+	def __str__(self):
+		return self.title
