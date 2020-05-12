@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db import models
 
 
 class MyAccountManager(BaseUserManager):
@@ -42,7 +42,7 @@ class MyAccountManager(BaseUserManager):
 # 		return self.slug
 
 
-class Account(AbstractBaseUser):
+class User(AbstractBaseUser):
 	id = models.AutoField(primary_key=True)
 	username = models.CharField(max_length=30, unique=True, blank=False)
 	name = models.CharField(verbose_name="Name", max_length=30, blank=False)
@@ -61,6 +61,7 @@ class Account(AbstractBaseUser):
 
 	objects = MyAccountManager()
 
+
 	def __str__(self):
 		return self.username
 
@@ -72,6 +73,8 @@ class Account(AbstractBaseUser):
 	def has_module_perms(self, app_label):
 		return True
 
+	# class Meta:
+	# 	app_label = 'app'
 
 
 
