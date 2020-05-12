@@ -65,8 +65,8 @@ class LendingAgreement(models.Model):
 class LendingRequest(models.Model):
 	title = models.CharField(max_length=100)
 	message = models.TextField(max_length=300)
-	sender = models.ForeignKey(User, on_delete=CASCADE, related_name='sender')
-	reciever = models.ForeignKey(User, on_delete=CASCADE, related_name='reciever', null=True, blank=True)
+	user = models.ForeignKey(User, on_delete=CASCADE)
+	owner = models.ForeignKey(User, on_delete=CASCADE, related_name='book_owner', null=True, blank=True)
 	public = models.BooleanField(default=False)
 	agreement = models.ForeignKey(LendingAgreement, on_delete=CASCADE, null=True, blank=True)
 

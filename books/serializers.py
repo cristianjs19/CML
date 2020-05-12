@@ -6,7 +6,7 @@ class FilterByUserSerializer(serializers.ListSerializer):
         try:
             data = data.filter(user=self.context['request'].user)
         except:
-            data = LendingAgreement.objects.all() #Una vez establecidos permisos, cambiar a raiseError.
+            data = LendingRequest.objects.all() #Una vez establecidos permisos, cambiar a raiseError.
         return super(FilterByUserSerializer, self).to_representation(data)
 
 
@@ -32,9 +32,7 @@ class BookImageSerializer(serializers.ModelSerializer):
         model = BookImage
         fields = '__all__'
 
-
 class LendingAgreementSerializer(serializers.ModelSerializer):
-    #lending_request = LendingRequestSerializer(many=True)
 
     class Meta:
         model = LendingAgreement
@@ -58,9 +56,10 @@ class LendingAgreementSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class LendingRequestSerializer(serializers.ModelSerializer):
-    lending_agreement_set = LendingAgreementSerializer(many=True)
 
     class Meta:
         model = LendingRequest
         list_serializer_class = FilterByUserSerializer
         fields = '__all__'
+        #('title', 'message', 'sender', 'reciever', 'public', 'agreement')
+
