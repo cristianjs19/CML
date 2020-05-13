@@ -6,7 +6,7 @@ class FilterByUserSerializer(serializers.ListSerializer):
         try:
             data = data.filter(user=self.context['request'].user)
         except:
-            data = LendingRequest.objects.all() #Una vez establecidos permisos, cambiar a raiseError.
+            data = Book.objects.all() #Una vez establecidos permisos, cambiar a raiseError.
         return super(FilterByUserSerializer, self).to_representation(data)
 
 
@@ -61,5 +61,6 @@ class LendingRequestSerializer(serializers.ModelSerializer):
         model = LendingRequest
         list_serializer_class = FilterByUserSerializer
         fields = '__all__'
+        #depth = 1
         #('title', 'message', 'sender', 'reciever', 'public', 'agreement')
 

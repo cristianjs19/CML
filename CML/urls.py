@@ -16,8 +16,8 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='form.html', extra_context={'title':'Login'}), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     
-    path('accounts/', include('accounts.urls')),
-    path('books/', include('books.urls')),
+    path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
+    path('books/', include(('books.urls', 'books'), namespace='books')),
     path('docs/', include_docs_urls(title='Books API')),
     path('schema/', get_schema_view(title="Books API"))
     # path('acuerdo/', include('books.urls')),
