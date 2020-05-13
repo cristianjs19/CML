@@ -15,3 +15,8 @@ TO RUN PROJECT:
 - python3 manage.py showmigrations
 - python3 manage.py sqlmigrate bookingApp 0001_initial // Cretae tables
 - python3 manage.py migrate
+
+
+CURL
+
+curl -X POST  -H "Content-Type: application/json" http://127.0.0.1:8000/booking/list  -d '{"author": "lal", "title": "lala", "description": "lalal", "genre": "action", "status": "available", "cover": null, "user":"1"}'

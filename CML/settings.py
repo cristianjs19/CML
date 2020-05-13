@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     #Local:
-    'bookingApp',
+    'qualifierApp',
 
     'accounts',
     'books'

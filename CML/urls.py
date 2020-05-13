@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 
-import bookingApp
+import qualifierApp
 from .views import HomePageView
 from accounts.views import UserCreateView
 from django.contrib.auth.views import LoginView, LogoutView
@@ -36,6 +36,6 @@ urlpatterns = [
     path('books/', include('books.urls')),
     # path('accounts/', include('allauth.urls')),
 
-    path('booking/', include('bookingApp.urls')),
+    path('booking/', include('qualifierApp.urls')),
 
 ]
