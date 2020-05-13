@@ -3,15 +3,15 @@ from .serializers import BookSerializer, BookImageSerializer, LendingAgreementSe
 from accounts.models import User
 from books.models import Book, LendingAgreement, LendingRequest
 
-class BookViewSet(viewsets.ModelViewSet):
+class BookView(viewsets.ModelViewSet):
 	queryset = Book.objects.all()
 	serializer_class = BookSerializer
 
-class LendingAgreementViewSet(viewsets.ModelViewSet):
+class LendingAgreementView(viewsets.ModelViewSet):
 	queryset = LendingAgreement.objects.all()
 	serializer_class = LendingAgreementSerializer
 
-class LendingRequestViewSet(viewsets.ModelViewSet):
+class LendingRequestView(viewsets.ModelViewSet):
 	queryset = LendingRequest.objects.all()
 	serializer_class = LendingRequestSerializer	
 

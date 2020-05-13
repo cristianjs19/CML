@@ -55,7 +55,9 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
           </li> -->
-
+          <li class='nav-item'>
+            <a class="nav-link" href='http://localhost:8000/books'>API</a>
+          </li>
           {% if request.user.is_authenticated %}
           <li class='nav-item'>
             <a class="nav-link" href='{% url "logout" %}'>Logout</a>
