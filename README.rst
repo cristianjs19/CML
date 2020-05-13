@@ -7,3 +7,8 @@ TO RUN PROJECT:
 4) ``python manage.py migrate``
 5) ``python manage.py createsuperuser``
 6) ``python manage.py runserver``
+
+TO RUN TESTS:
+-------------
+``python manage.py test``
+``python manage.py test <app>``
