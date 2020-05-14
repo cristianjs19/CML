@@ -1,51 +1,22 @@
 from django.db import models
+from django.db.models import CASCADE
+from accounts.models import User
+from books.models import LendingAgreement, Book
 
-# Create your models here.
+class Qualifier(models.Model):
+    veracity_evaluation = models.CharField(max_length=30, null=True, blank=True)
+    communication_evaluation = models.CharField(max_length=30, null=True, blank=True)
+    cleaning_evaluation = models.CharField(max_length=30, null=True, blank=True)
+    delivery_evaluation = models.CharField(max_length=30, null=True, blank=True)
+    puntuality_evaluation = models.CharField(max_length=30, null=True, blank=True)
 
-
-from django.template.defaultfilters import slugify
-
-
-class Post(models.Model):
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True, max_length=255)
-    content = models.TextField()
-    created_on = models.DateTimeField(auto_now_add=True)
-    author = models.TextField()
-
-    #@models.permalink
-    def get_absolute_url(self):
-        return ('blog_post_detail', (),
-                {
-                   'slug': self.slug,
-                })
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super(Post, self).save(*args, **kwargs)
-
-    class Meta:
-        ordering = ['created_on']
-
-        def __unicode__(self):
-            return self.title
-
-
-class Comment(models.Model):
-    name = models.CharField(max_length=42)
-    email = models.EmailField(max_length=75)
-    website = models.URLField(max_length=200, null=True, blank=True)
-    content = models.TextField()
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    created_on = models.DateTimeField(auto_now_add=True)
-
-
-
-class Snippet(models.Model):
+    # agreement = models.ForeignKey(LendingAgreement, on_delete=CASCADE)
+    description = models.TextField(blank=False, default="")
     created = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=100, blank=True, default='')
-    code = models.TextField()
-    linenos = models.BooleanField(default=False)
+
+    qualifying_user= models.ForeignKey(User, on_delete=CASCADE, related_name='qualifying_user')
+    book = models.ForeignKey(Book, on_delete=CASCADE)
+
     class Meta:
         ordering = ['created']
+

@@ -2,7 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
-from qualifierApp.models import Snippet
+from qualifierApp.models import Qualifier
 
 # Create your views here.
 from rest_framework import viewsets
@@ -27,11 +27,8 @@ def makeBooking(request):
 
 @csrf_exempt
 def snippet_list(request):
-    """
-    List all code snippets, or create a new snippet.
-    """
     if request.method == 'GET':
-        snippets = Book.objects.all()
+        snippets = Qualifier.objects.all()
         serializer = SnippetSerializer(snippets, many=True)
         return JsonResponse(serializer.data, safe=False)
 
@@ -49,7 +46,7 @@ def snippet_detail(request, pk):
     Retrieve, update or delete a code snippet.
     """
     try:
-        snippet = Book.objects.get(pk=pk)
+        snippet = Qualifier.objects.get(pk=pk)
     except Book.DoesNotExist:
         return HttpResponse(status=404)
 
