@@ -3,3 +3,5 @@ static/vendor/
 db.sqlite3
 **/migrations/*
 ./idea/*
+*/idea/*
+__init__.py
