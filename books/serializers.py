@@ -1,33 +1,29 @@
 from rest_framework import serializers, fields, exceptions
 from books.models import Book, BookImage, LendingAgreement, LendingRequest
 
-class FilterBookByUserSerializer(serializers.ListSerializer):
+class FilterByUserSerializer(serializers.ListSerializer):
     def to_representation(self, data):
         try:
             data = data.filter(user=self.context['request'].user)
         except:
-            data = Book.objects.all()
-        return super(FilterBookByUserSerializer, self).to_representation(data)
-
-
-# class OrderSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Order
-#         list_serializer_class = FilteredOrderSerializer
-
-
-# class ProductSerializer(serializers.ModelSerializer):
-#     order_set = OrderSerializer(many=True, read_only=True)
-
-#     class Meta:
-#         model = Product
+            data = Book.objects.all() #Una vez establecidos permisos, cambiar a raiseError.
+        return super(FilterByUserSerializer, self).to_representation(data)
 
 
 class BookSerializer(serializers.ModelSerializer):
+    # list_serializer = serializers.SerializerMethodField()
+
+    # def get_list_serializer(self, data):
+    #     serializer = FilterByUserSerializer()
+    #     try:
+    #         data = serializer.to_representation()
+    #     except:
+    #         data = Book.objects.all()
+    #     return super(BookSerializer, self).get_list_serializer()
 
     class Meta:
         model = Book
-        list_serializer_class = FilterBookByUserSerializer
+        list_serializer_class = FilterByUserSerializer
         fields = '__all__'
 
 class BookImageSerializer(serializers.ModelSerializer):
@@ -40,12 +36,31 @@ class LendingAgreementSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LendingAgreement
-        fields = '__all__'                
+        list_serializer_class = FilterByUserSerializer
+        # fields = [
+        #     'id',
+        #     'description',
+        #     'acepted',
+        #     'deliver',
+        #     'deliver_date',
+        #     'give_back',
+        #     'give_back_date',
+        #     'extra',
+        #     'extendable',
+        #     'book_id',
+        #     'owner_id',
+        #     'user_id',
+        #     'title',
+        #     # 'lending_request_set',
+        # ]                  
+        fields = '__all__'
 
 class LendingRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Book
+        model = LendingRequest
+        list_serializer_class = FilterByUserSerializer
         fields = '__all__'
+        #depth = 1
+        #('title', 'message', 'sender', 'reciever', 'public', 'agreement')
 
-        

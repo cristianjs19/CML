@@ -8,10 +8,15 @@ TO RUN PROJECT:
 5) ``python manage.py createsuperuser``
 6) ``python manage.py runserver``
 
-
 ## Others
 - python3 manage.py showmigrations
 - python3 manage.py sqlmigrate bookingApp 0001_initial // Cretae tables
+
+
+TO RUN TESTS:
+-------------
+``python manage.py test``
+``python manage.py test <app>``
 
 
 CURL
