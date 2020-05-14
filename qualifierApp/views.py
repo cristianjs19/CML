@@ -2,6 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
+from books.serializers import BookSerializer
 from qualifierApp.models import Qualifier
 
 # Create your views here.
@@ -9,7 +10,7 @@ from rest_framework import viewsets
 from rest_framework.parsers import JSONParser
 
 from books.models import Book
-from qualifierApp.serializers import BookSerializer, SnippetSerializer
+from qualifierApp.serializers import  QualifierSerializer
 
 
 class BookViewSet(viewsets.ModelViewSet):
@@ -26,42 +27,39 @@ def makeBooking(request):
 
 
 @csrf_exempt
-def snippet_list(request):
+def qualifier_list(request):
     if request.method == 'GET':
-        snippets = Qualifier.objects.all()
-        serializer = SnippetSerializer(snippets, many=True)
+        qualifier = Qualifier.objects.all()
+        serializer = QualifierSerializer(qualifier, many=True)
         return JsonResponse(serializer.data, safe=False)
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
-        serializer = SnippetSerializer(data=data)
+        serializer = QualifierSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
 
 @csrf_exempt
-def snippet_detail(request, pk):
-    """
-    Retrieve, update or delete a code snippet.
-    """
+def qualifier_detail(request, pk):
     try:
-        snippet = Qualifier.objects.get(pk=pk)
+        qualifier = Qualifier.objects.get(pk=pk)
     except Book.DoesNotExist:
         return HttpResponse(status=404)
 
     if request.method == 'GET':
-        serializer = SnippetSerializer(snippet)
+        serializer = QualifierSerializer(qualifier)
         return JsonResponse(serializer.data)
 
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
-        serializer = SnippetSerializer(snippet, data=data)
+        serializer = QualifierSerializer(qualifier, data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data)
         return JsonResponse(serializer.errors, status=400)
 
     elif request.method == 'DELETE':
-        snippet.delete()
+        qualifier.delete()
         return HttpResponse(status=204)

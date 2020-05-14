@@ -36,6 +36,6 @@ urlpatterns = [
     path('books/', include('books.urls')),
     # path('accounts/', include('allauth.urls')),
 
-    path('booking/', include('qualifierApp.urls')),
+    path('qualifier/', include('qualifierApp.urls')),
 
 ]
