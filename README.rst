@@ -16,6 +16,7 @@ TO RUN PROJECT:
 TO RUN TESTS:
 -------------
 ``python manage.py test``
+
 ``python manage.py test <app>``
 
 
