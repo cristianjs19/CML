@@ -1,19 +1,19 @@
 from rest_framework import viewsets, mixins
-from .serializers import BookSerializer, BookImageSerializer, LendingAgreementSerializer, LendingRequestSerializer
+from .serializers import BookSerializer, BookImageSerializer, BookRequestSerializer, PublicRequestSerializer
 from accounts.models import User
-from books.models import Book, LendingAgreement, LendingRequest
+from books.models import Book, BookRequest, PublicRequest
 
 class BookView(viewsets.ModelViewSet):
 	queryset = Book.objects.all()
 	serializer_class = BookSerializer
 
-class LendingAgreementView(viewsets.ModelViewSet):
-	queryset = LendingAgreement.objects.all()
-	serializer_class = LendingAgreementSerializer
+class BookRequestView(viewsets.ModelViewSet):
+	queryset = BookRequest.objects.all()
+	serializer_class = BookRequestSerializer
 
-class LendingRequestView(viewsets.ModelViewSet):
-	queryset = LendingRequest.objects.all()
-	serializer_class = LendingRequestSerializer	
+class PublicRequestView(viewsets.ModelViewSet):
+	queryset = PublicRequest.objects.all()
+	serializer_class = PublicRequestSerializer	
 
 # 	def get_queryset(self):
 #         program = int(self.kwargs.get('pk_program',  0))

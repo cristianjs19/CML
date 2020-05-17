@@ -1,5 +1,5 @@
 from rest_framework import serializers, fields, exceptions
-from books.models import Book, BookImage, LendingAgreement, LendingRequest
+from books.models import Book, BookImage, BookRequest, PublicRequest
 
 class FilterByUserSerializer(serializers.ListSerializer):
     def to_representation(self, data):
@@ -32,10 +32,10 @@ class BookImageSerializer(serializers.ModelSerializer):
         model = BookImage
         fields = '__all__'
 
-class LendingAgreementSerializer(serializers.ModelSerializer):
+class BookRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = LendingAgreement
+        model = BookRequest
         list_serializer_class = FilterByUserSerializer
         # fields = [
         #     'id',
@@ -55,10 +55,10 @@ class LendingAgreementSerializer(serializers.ModelSerializer):
         # ]                  
         fields = '__all__'
 
-class LendingRequestSerializer(serializers.ModelSerializer):
+class PublicRequestSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = LendingRequest
+        model = PublicRequest
         list_serializer_class = FilterByUserSerializer
         fields = '__all__'
         #depth = 1

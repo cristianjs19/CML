@@ -1,7 +1,7 @@
 from django.db import models
 from django.db.models import CASCADE
 from accounts.models import User
-from books.models import LendingAgreement, Book
+from books.models import BookRequest, Book
 
 class Qualifier(models.Model):
     veracity_evaluation = models.CharField(max_length=30, null=True, blank=True)
