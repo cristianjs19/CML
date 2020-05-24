@@ -5,7 +5,7 @@ TO RUN PROJECT:
 2) ``pip install -r requirements.txt``
 3) ``python manage.py makemigrations`` *app
 4) ``python manage.py migrate``
-5) ``python manage.py createsuperuser``
+5) ``python manage.py createsuperuser`` 
 6) ``python manage.py runserver``
 
 ## Others
@@ -16,7 +16,9 @@ TO RUN PROJECT:
 TO RUN TESTS:
 -------------
 ``python manage.py test``
-``python manage.py test <app>``
+
+``python manage.py test <app>`` 
+
 
 
 CURL
