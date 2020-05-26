@@ -1,9 +1,9 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from qualifierApp.models import Qualifier, QualificationDetail
+from qualifierApp.models import Qualifier, Qualification, ScoreByQualification
 from rest_framework.parsers import JSONParser
 from books.models import Book
-from qualifierApp.serializers import QualifierSerializer, QualificationDetailSerializer
+from qualifierApp.serializers import QualifierSerializer, QualificationSerializer, ScoreByQualificationSerializer
 
 
 @csrf_exempt
@@ -48,15 +48,15 @@ def qualifier_detail(request, pk):
 
 
 @csrf_exempt
-def QualificationDetail_list(request):
+def qualification(request):
     if request.method == 'GET':
-        qualifier = QualificationDetail.objects.all()
-        serializer = QualificationDetailSerializer(qualifier, many=True)
+        qualifier = Qualification.objects.all()
+        serializer = QualificationSerializer(qualifier, many=True)
         return JsonResponse(serializer.data, safe=False)
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
-        serializer = QualificationDetailSerializer(data=data)
+        serializer = QualificationSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
@@ -64,24 +64,41 @@ def QualificationDetail_list(request):
 
 
 @csrf_exempt
-def QualificationDetail_byId(request, pk):
+def scoreByQualification(request):
+    if request.method == 'GET':
+        scoreByQualification = ScoreByQualification.objects.all()
+        serializer = ScoreByQualificationSerializer(scoreByQualification, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        serializer = ScoreByQualificationSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+
+
+@csrf_exempt
+def qualification_byId(request, pk):
     try:
-        qualifier = Qualifier.objects.get(pk=pk)
+        qualification = Qualification.objects.get(pk=pk)
     except Book.DoesNotExist:
         return HttpResponse(status=404)
 
     if request.method == 'GET':
-        serializer = QualifierSerializer(qualifier)
+        serializer = QualificationSerializer(qualification)
         return JsonResponse(serializer.data)
 
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
-        serializer = QualifierSerializer(qualifier, data=data)
+        serializer = QualificationSerializer(qualification, data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data)
         return JsonResponse(serializer.errors, status=400)
 
     elif request.method == 'DELETE':
-        qualifier.delete()
+        qualification.delete()
         return HttpResponse(status=204)

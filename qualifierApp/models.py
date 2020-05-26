@@ -21,15 +21,19 @@ class Qualifier(models.Model):
         ordering = ['created']
 
 
-class QualificationDetail(models.Model):
-    agreement = models.ForeignKey(LendingAgreement, on_delete=CASCADE)
+class Qualification(models.Model):
+    agreement_id = models.ForeignKey(LendingAgreement, on_delete=CASCADE)
     description = models.TextField(blank=False, default="")
     created = models.DateTimeField(auto_now_add=True)
     evaluated = models.ForeignKey(User, on_delete=CASCADE, related_name='evaluated')
-    book = models.ForeignKey(Book, on_delete=CASCADE)
     overall = models.IntegerField(default=0)
     class Meta:
         ordering = ['created']
+"""
+    @property
+    def ScoreByQualification(self, stuff=None):
+        return stuff
+"""
 
 cualificationType = [
     ('compliant', 'Compliant'),
@@ -39,8 +43,9 @@ cualificationType = [
     #veracity
     #puntuality
     #delivery
-
 ]
+
 class ScoreByQualification(models.Model):
-    extendable = models.CharField(max_length=30, null=True, blank=True, choices=cualificationType)
+    type = models.CharField(max_length=30, null=True, blank=True, choices=cualificationType)
     score = models.IntegerField(default=0)
+    qualification_id = models.ForeignKey(Qualification, on_delete=CASCADE)
