@@ -24,3 +24,17 @@ El owner acepta una de todas las solicitudes pendientes, eligiendo las fechas en
 
 
 PUT **/request_accept**
+
+## POST /qualifier 
+{
+	"veracity_evaluation": "1",
+	"communication_evaluation": 1,
+	"cleaning_evaluation": 1,
+	"delivery_evaluation": 3,
+	"puntuality_evaluation": 2,
+	"agreement": 2,
+	"description": "llalalala",
+	"qualifying_user": 1,
+	"book": 1
+}
+curl -X POST  -H "Content-Type: application/json" http://127.0.0.1:8000/qualifier/  -d '{"veracity_evaluation":"1","communication_evaluation":1,"cleaning_evaluation":1,"delivery_evaluation":3,"puntuality_evaluation":2,"agreement":2,"description":"llalalala","qualifying_user":1,"book":1}'
