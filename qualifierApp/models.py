@@ -29,11 +29,6 @@ class Qualification(models.Model):
     overall = models.IntegerField(default=0)
     class Meta:
         ordering = ['created']
-"""
-    @property
-    def ScoreByQualification(self, stuff=None):
-        return stuff
-"""
 
 cualificationType = [
     ('compliant', 'Compliant'),

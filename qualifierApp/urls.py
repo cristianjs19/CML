@@ -1,12 +1,12 @@
-from django.urls import path
+from django.conf.urls import url
+from django.urls import path, re_path
 
 from . import views
 
 urlpatterns = [
 
-    path('', views.qualifier_list),
+    path('', views.qualification_byQualifiedUser),
     path('all', views.qualification),
     path('score', views.scoreByQualification),
-    path('all/<int:pk>', views.qualification_byId),
-    path('<int:pk>', views.qualifier_detail)
+    path('<int:pk>', views.qualification_byId),
 ]

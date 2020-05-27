@@ -1,66 +1,41 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import viewsets, generics, filters
+from rest_framework.viewsets import ModelViewSet
+
 from qualifierApp.models import Qualifier, Qualification, ScoreByQualification
 from rest_framework.parsers import JSONParser
 from books.models import Book
-from qualifierApp.serializers import QualifierSerializer, QualificationSerializer, ScoreByQualificationSerializer
-
-
-@csrf_exempt
-def qualifier_list(request):
-    if request.method == 'GET':
-        qualifier = Qualifier.objects.all()
-        serializer = QualifierSerializer(qualifier, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = QualifierSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
-
-
-@csrf_exempt
-def qualifier_detail(request, pk):
-    try:
-        qualifier = Qualifier.objects.get(pk=pk)
-    except Book.DoesNotExist:
-        return HttpResponse(status=404)
-
-    if request.method == 'GET':
-        serializer = QualifierSerializer(qualifier)
-        return JsonResponse(serializer.data)
-
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = QualifierSerializer(qualifier, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
-
-    elif request.method == 'DELETE':
-        qualifier.delete()
-        return HttpResponse(status=204)
-
+from qualifierApp.serializers import QualifierSerializer, QualificationSerializerGET, ScoreByQualificationSerializer, \
+    QualificationSerializerPOST
 
 
 @csrf_exempt
 def qualification(request):
     if request.method == 'GET':
         qualifier = Qualification.objects.all()
-        serializer = QualificationSerializer(qualifier, many=True)
+        serializer = QualificationSerializerGET(qualifier, many=True)
         return JsonResponse(serializer.data, safe=False)
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
-        serializer = QualificationSerializer(data=data)
+        serializer = QualificationSerializerPOST(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
+
+@csrf_exempt
+def qualification_byQualifiedUser(request):
+    if request.method == 'GET':
+        userId = request.GET.get('user_id', '')
+        try:
+            qualification = Qualification.objects.filter(evaluated=userId)
+        except Qualification.DoesNotExist:
+            return HttpResponse(status=404)
+        serializer = QualificationSerializerGET(qualification, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
 
 
 @csrf_exempt
@@ -79,7 +54,6 @@ def scoreByQualification(request):
         return JsonResponse(serializer.errors, status=400)
 
 
-
 @csrf_exempt
 def qualification_byId(request, pk):
     try:
@@ -88,12 +62,12 @@ def qualification_byId(request, pk):
         return HttpResponse(status=404)
 
     if request.method == 'GET':
-        serializer = QualificationSerializer(qualification)
+        serializer = QualificationSerializerGET(qualification)
         return JsonResponse(serializer.data)
 
     elif request.method == 'PUT':
         data = JSONParser().parse(request)
-        serializer = QualificationSerializer(qualification, data=data)
+        serializer = QualificationSerializerGET(qualification, data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data)
@@ -102,3 +76,4 @@ def qualification_byId(request, pk):
     elif request.method == 'DELETE':
         qualification.delete()
         return HttpResponse(status=204)
+

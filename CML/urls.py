@@ -25,6 +25,6 @@ urlpatterns = [
     # path('solicitud/', include('books.urls')),
     # path('accounts/', include('allauth.urls')),
 
-    path('qualifier/', include('qualifierApp.urls'))
+    path('qualification/', include('qualifierApp.urls'))
 
 ]
