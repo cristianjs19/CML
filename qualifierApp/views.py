@@ -1,10 +1,10 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from qualifierApp.models import Qualifier, Qualification, ScoreByQualification
+from qualifierApp.models import Qualification, ScoreByQualification
 from rest_framework.parsers import JSONParser
 from books.models import Book
-from qualifierApp.serializers import QualifierSerializer, QualificationSerializerGET, ScoreByQualificationSerializer, \
+from qualifierApp.serializers import QualificationSerializerGET, ScoreByQualificationSerializer, \
     QualificationSerializerPOST
 
 
