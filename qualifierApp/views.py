@@ -1,7 +1,5 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework import viewsets, generics, filters
-from rest_framework.viewsets import ModelViewSet
 
 from qualifierApp.models import Qualifier, Qualification, ScoreByQualification
 from rest_framework.parsers import JSONParser
@@ -37,22 +35,30 @@ def qualification_byQualifiedUser(request):
         return JsonResponse(serializer.data, safe=False)
 
 
-
 @csrf_exempt
 def scoreByQualification(request):
     if request.method == 'GET':
-        scoreByQualification = ScoreByQualification.objects.all()
-        serializer = ScoreByQualificationSerializer(scoreByQualification, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        scoreByQualification_data = ScoreByQualification.objects.all()
+        scoreByQualification_set = ScoreByQualificationSerializer(scoreByQualification_data, many=True)
+        return JsonResponse(scoreByQualification_set.data, safe=False)
 
     elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = ScoreByQualificationSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+        scoreByQualification_data = JSONParser().parse(request)
+        scoreByQualification_set = ScoreByQualificationSerializer(data=scoreByQualification_data)
+        if scoreByQualification_set.is_valid():
+            scoreByQualification_set.save()
+            calculateOveroll(scoreByQualification_data)
+            return JsonResponse(scoreByQualification_set.data, status=201)
+        return JsonResponse(scoreByQualification_set.errors, status=400)
 
+def calculateOveroll(scoreByQualification_data):
+    qualification = Qualification.objects.get(pk=scoreByQualification_data.get('qualification_id'))
+    scores = qualification.scorebyqualification_set.all()
+    total = 0
+    for score in scores:
+        total = total+ score.score
+    qualification.overall = total/scores.count()
+    qualification.save(update_fields=['overall'])
 
 @csrf_exempt
 def qualification_byId(request, pk):
