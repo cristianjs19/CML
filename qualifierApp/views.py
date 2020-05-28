@@ -24,9 +24,8 @@ def qualification(request):
         return JsonResponse(serializer.errors, status=400)
 
 @csrf_exempt
-def qualification_byQualifiedUser(request):
+def qualification_byQualifiedUser(request, userId):
     if request.method == 'GET':
-        userId = request.GET.get('user_id', '')
         try:
             qualification = Qualification.objects.filter(evaluated=userId)
         except Qualification.DoesNotExist:

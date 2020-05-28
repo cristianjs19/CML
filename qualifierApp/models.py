@@ -28,7 +28,7 @@ class Qualification(models.Model):
     description = models.TextField(blank=False, default="")
     created = models.DateTimeField(auto_now_add=True)
     evaluated = models.ForeignKey(User, on_delete=CASCADE, related_name='evaluated')
-    overall = models.DecimalField(max_digits=0, decimal_places=2, default=Decimal(0.00))
+    overall = models.DecimalField(max_digits=5, decimal_places=2, default=Decimal(0.00))
     class Meta:
         ordering = ['created']
 
