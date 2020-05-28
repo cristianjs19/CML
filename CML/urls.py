@@ -22,7 +22,7 @@ urlpatterns = [
     path('books/', include(('books.urls', 'books'), namespace='books')),
     path('docs/', include_docs_urls(title='Books API')),
     path('schema/', get_schema_view(title="Books API")),
-    path('qualifications', include('qualifierApp.urls')),
+    path('qualifications/', include('qualifierApp.urls')),
     path('users/<int:userId>/qualifications', views.qualification_byQualifiedUser)
 
 ]

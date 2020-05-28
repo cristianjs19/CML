@@ -6,6 +6,6 @@ from . import views
 urlpatterns = [
 
     path('', views.qualification),
-    path('/scores', views.scoreByQualification),
-    path('/<int:pk>', views.qualification_byId),
+    path('scores', views.scoreByQualification),
+    path('<int:pk>', views.qualification_byId),
 ]
