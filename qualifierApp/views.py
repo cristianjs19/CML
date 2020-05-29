@@ -46,11 +46,11 @@ def scoreByQualification(request):
         scoreByQualification_set = ScoreByQualificationSerializer(data=scoreByQualification_data)
         if scoreByQualification_set.is_valid():
             scoreByQualification_set.save()
-            calculateOveroll(scoreByQualification_data)
+            calculateOverall(scoreByQualification_data)
             return JsonResponse(scoreByQualification_set.data, status=201)
         return JsonResponse(scoreByQualification_set.errors, status=400)
 
-def calculateOveroll(scoreByQualification_data):
+def calculateOverall(scoreByQualification_data):
     qualification = Qualification.objects.get(pk=scoreByQualification_data.get('qualification_id'))
     scores = qualification.scorebyqualification_set.all()
     total = 0
