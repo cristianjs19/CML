@@ -24,3 +24,21 @@ El owner acepta una de todas las solicitudes pendientes, eligiendo las fechas en
 
 
 PUT **/request_accept**
+
+## POST /qualifications 
+{
+	"overall": 1,
+	"description": "llalalala",
+	"evaluated": 2,
+	"book": 1,
+	"agreement_id": 1
+}
+curl -X POST  -H "Content-Type: application/json" http://127.0.0.1:8000/qualifications/  -d '{"overall":1,"description":"llalalala","evaluated":2,"book":1, "agreement_id": 1}'
+
+## POST /qualifications/scores
+{
+	"type": "bookCare",
+	"score": 1,
+	"qualification_id": 9
+}
+curl -X POST  -H "Content-Type: application/json" http://127.0.0.1:8000/qualifications/scores  -d '{"type":"bookCare","score":1, "qualification_id":9}'
