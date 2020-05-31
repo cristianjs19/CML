@@ -13,7 +13,7 @@ GENRES = [
 ]
 BOOK_STATUS = [
 	('available', 'Available'),
-	('lended', 'Lended'),
+	('unavailable', 'Unavailable'),
 	('hidden', 'Hidden'),
 ]
 REQUEST_STATUS = [
@@ -26,12 +26,18 @@ EXTENDABLE = [
 	('no', 'No'),
 	('later', 'Later'),
 ]
+CONDITION = [
+	('offer', 'Offer'),
+	('request', 'Request'),
+]
 
 class Book(models.Model):
 	user = models.ForeignKey(User, on_delete=CASCADE)
 	author = models.CharField(max_length=150, null=True, blank=False)
 	title = models.CharField(max_length=150, null=True, blank=False)
 	description = models.CharField(max_length=200,null=True, blank=True)
+	message = models.CharField(max_length=200,null=True, blank=True)
+	condition = models.CharField(max_length=30 , null=False, blank=False, choices=CONDITION)
 	genre = models.CharField(max_length=30 , null=True, blank=True, choices=GENRES)
 	status = models.CharField(max_length=30 , null=True, blank=False, choices=BOOK_STATUS)
 	cover = models.ImageField(upload_to='images/book_images', null=True, blank=True)
@@ -50,24 +56,14 @@ class BookImage(models.Model):
 	class Meta:
 		verbose_name_plural = "BookImages"
 
-
-class PublicRequest(models.Model):
-	user = models.ForeignKey(User, on_delete=CASCADE)
-	book_name = models.CharField(max_length=100)
-	book_author = models.CharField(max_length=100)
-	message = models.TextField(max_length=300)
-	create_date = models.DateField(auto_now_add=True, editable=False)
-
-	def __str__(self):
-		return self.book_name
-
-class BookRequest(models.Model):
+class LendingAgreement(models.Model):
 	user = models.ForeignKey(User, on_delete=CASCADE, related_name='user')
 	owner = models.ForeignKey(User, on_delete=CASCADE, related_name='owner')
 	book = models.ForeignKey(Book, on_delete=CASCADE)
 	status = models.CharField(max_length=30 , null=False, blank=False, default="onArrange", choices=REQUEST_STATUS)
+	request_date = models.DateField(auto_now_add=True, editable=False)
+	acceptance_date = models.DateField(null=True)
 	message = models.TextField(blank=False, default="")
-	acceptance_date = models.DateField(auto_now_add=True, editable=False)
 	deliver = models.CharField(max_length=50) # especifica como se hará la entrega.
 	deliver_date = models.DateField(blank=False)
 	give_back = models.CharField(max_length=50) # especifica como se hará la devolución.
@@ -76,32 +72,4 @@ class BookRequest(models.Model):
 	extendable = models.CharField(max_length=30 , null=True, blank=True, choices=EXTENDABLE)
 
 	def __str__(self):
-		return self.book
-
-# class LendingAgreement(models.Model):
-# 	title = models.CharField(max_length=100)
-# 	user = models.ForeignKey(User, on_delete=CASCADE, related_name='user')
-# 	owner = models.ForeignKey(User, on_delete=CASCADE, related_name='owner')
-# 	book = models.ForeignKey(Book, on_delete=CASCADE)
-# 	description = models.TextField(blank=False, default="")
-# 	acepted = models.DateField(auto_now_add=True, editable=False)
-# 	deliver = models.CharField(max_length=50) # especifica como se hará la entrega.
-# 	deliver_date = models.DateField(blank=False)
-# 	give_back = models.CharField(max_length=50) # especifica como se hará la devolución.
-# 	give_back_date = models.DateField(blank=False)
-# 	extra = models.CharField(max_length=50, null=True, blank=True) # posibilidad de solicitar extra ej, copia de dni.
-# 	extendable = models.CharField(max_length=30 , null=True, blank=True, choices=EXTENDABLE)
-
-# 	def __str__(self):
-# 		return self.title
-
-# class LendingRequest(models.Model):
-# 	title = models.CharField(max_length=100)
-# 	message = models.TextField(max_length=300)
-# 	user = models.ForeignKey(User, on_delete=CASCADE)
-# 	owner = models.ForeignKey(User, on_delete=CASCADE, related_name='book_owner', null=True, blank=True)
-# 	public = models.BooleanField(default=False)
-# 	agreement = models.ForeignKey(LendingAgreement, on_delete=CASCADE, null=True, blank=True)
-
-# 	def __str__(self):
-# 		return self.title
+		return self.book.title

@@ -1,14 +1,13 @@
 from django.urls import path
 from rest_framework import routers
 # enrrollment resources
-from books.views import BookView, BookRequestView, PublicRequestView
+from books.views import BookView, LendingAgreementView
 
 
 router = routers.DefaultRouter()
 
 router.register('books', BookView)
-router.register('bookrequest', BookRequestView)
-router.register('publicrequest', PublicRequestView)
+router.register('lendingagreement', LendingAgreementView)
 
 
 urlpatterns = router.urls
