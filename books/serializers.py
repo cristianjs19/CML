@@ -1,5 +1,5 @@
 from rest_framework import serializers, fields, exceptions
-from books.models import Book, BookImage, LendingAgreement, LendingRequest
+from books.models import Book, BookImage, LendingAgreement
 
 class FilterByUserSerializer(serializers.ListSerializer):
     def to_representation(self, data):
@@ -11,15 +11,6 @@ class FilterByUserSerializer(serializers.ListSerializer):
 
 
 class BookSerializer(serializers.ModelSerializer):
-    # list_serializer = serializers.SerializerMethodField()
-
-    # def get_list_serializer(self, data):
-    #     serializer = FilterByUserSerializer()
-    #     try:
-    #         data = serializer.to_representation()
-    #     except:
-    #         data = Book.objects.all()
-    #     return super(BookSerializer, self).get_list_serializer()
 
     class Meta:
         model = Book
@@ -54,13 +45,4 @@ class LendingAgreementSerializer(serializers.ModelSerializer):
         #     # 'lending_request_set',
         # ]                  
         fields = '__all__'
-
-class LendingRequestSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = LendingRequest
-        list_serializer_class = FilterByUserSerializer
-        fields = '__all__'
-        #depth = 1
-        #('title', 'message', 'sender', 'reciever', 'public', 'agreement')
 

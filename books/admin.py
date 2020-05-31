@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from books.models import Book, LendingAgreement, LendingRequest
+from books.models import Book, LendingAgreement
 
 
 class BookAdmin(admin.ModelAdmin):
@@ -11,15 +11,15 @@ class BookAdmin(admin.ModelAdmin):
 	list_filter = ()
 	fieldsets = ()
 
-class LendingRequestAdmin(admin.ModelAdmin):
-    search_fields = ['user', 'title']
-    list_display = ['user', 'title']
-
 class LendingAgreementAdmin(admin.ModelAdmin):
     search_fields = ['user', 'book']
     list_display = ['user', 'book']
 
+# class PublicRequestAdmin(admin.ModelAdmin):
+#     search_fields = ['user', 'book_name']
+#     list_display = ['user', 'book_name']
+
 
 admin.site.register(Book, BookAdmin)
-admin.site.register(LendingRequest, LendingRequestAdmin)
 admin.site.register(LendingAgreement, LendingAgreementAdmin)
+# admin.site.register(PublicRequest, PublicRequestAdmin)

@@ -4,6 +4,8 @@ from django.conf import settings
 from rest_framework.documentation import include_docs_urls
 from rest_framework.schemas import get_schema_view
 
+import qualifierApp
+from qualifierApp import views
 from .views import HomePageView
 from accounts.views import UserCreateView
 from django.contrib.auth.views import LoginView, LogoutView
@@ -19,10 +21,8 @@ urlpatterns = [
     path('accounts/', include(('accounts.urls', 'accounts'), namespace='accounts')),
     path('books/', include(('books.urls', 'books'), namespace='books')),
     path('docs/', include_docs_urls(title='Books API')),
-    path('schema/', get_schema_view(title="Books API"))
-    # path('acuerdo/', include('books.urls')),
-    # path('solicitud/', include('books.urls')),
-    # path('accounts/', include('allauth.urls')),
-
+    path('schema/', get_schema_view(title="Books API")),
+    path('qualifications/', include('qualifierApp.urls')),
+    path('users/<int:userId>/qualifications', views.qualification_byQualifiedUser)
 
 ]
