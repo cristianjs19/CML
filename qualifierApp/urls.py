@@ -1,11 +1,11 @@
-from django.urls import path
+from django.conf.urls import url
+from django.urls import path, re_path
 
 from . import views
 
 urlpatterns = [
 
-    path('', views.qualifier_list),
-    path('<int:pk>', views.qualifier_detail),
-    path('nada', views.index, name='makeBooking'),
-    path('index', views.index, name='index')
+    path('', views.qualification),
+    path('scores', views.scoreByQualification),
+    path('<int:pk>', views.qualification_byId),
 ]
