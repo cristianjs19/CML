@@ -13,8 +13,9 @@ GENRES = [
 ]
 BOOK_STATUS = [
 	('available', 'Available'),
-	('unavailable', 'Unavailable'),
+	('reserved', 'Reserved'),
 	('hidden', 'Hidden'),
+	('complished', 'Complished'),
 ]
 REQUEST_STATUS = [
 	('onArrange', 'On Arrange'),
@@ -77,13 +78,17 @@ class LendingAgreement(models.Model):
 	def accept_agreement(self):
 		instance = self
 		instance.status = "accepted"
+		instance.book.status = "reserved"
 		time = datetime.datetime.now()
 		instance.acceptance_date = time
 		instance.save()
 
 	def end_agreement(self):
 		now = datetime.date.today()
-		if now >= self.give_back_date:
-			self.status = "ended"
-			self.save()
+		self.status = "ended"
+		if self.book.condition == "offer"
+			self.book.status = "available"
+		elif self.book.condition == "request"
+			self.book.condition == "complished"
+		self.save()
 	
