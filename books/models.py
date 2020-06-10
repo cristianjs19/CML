@@ -43,7 +43,7 @@ class Book(models.Model):
 	cover = models.ImageField(upload_to='images/book_images', null=True, blank=True)
 
 	def __str__(self):
-		return self.title	
+		return self.title
 
 
 class BookImage(models.Model):
@@ -73,3 +73,17 @@ class LendingAgreement(models.Model):
 
 	def __str__(self):
 		return self.book.title
+
+	def accept_agreement(self):
+		instance = self
+		instance.status = "accepted"
+		time = datetime.datetime.now()
+		instance.acceptance_date = time
+		instance.save()
+
+	def end_agreement(self):
+		now = datetime.date.today()
+		if now >= self.give_back_date:
+			self.status = "ended"
+			self.save()
+	
